@@ -4,7 +4,14 @@ import glob
 # Parse files in the raw directory
 pattern = 'data/raw/*/*'
 dcmlist = list(glob.glob(f'{pattern}'))
-dcmlist = [x[4:] for x in dcmlist]
+for directory in dcmlist:
+    files = os.listdir(directory)
+    for file in files:
+        if file.startswith('.'):
+            os.remove(os.path.join(directory, file))
+dcmlist = [x.replace('-', '_') for x in dcmlist]
+dcmlist = [x[9:] for x in dcmlist]
+print(dcmlist)
 pathlist = dcmlist
 dcmlist = [str.split(d, '/')[1] for d in dcmlist]
 dcmlist = [
