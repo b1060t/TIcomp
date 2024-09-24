@@ -2,7 +2,7 @@ import os
 import glob
 
 # Parse files in the raw directory
-pattern = 'raw/*/*'
+pattern = 'data/raw/*/*'
 dcmlist = list(glob.glob(f'{pattern}'))
 dcmlist = [x[4:] for x in dcmlist]
 pathlist = dcmlist
@@ -36,8 +36,8 @@ for rec in dcmlist:
             'raw_dir': {}
         }
         cohort[id]['raw_dir'].update({ses: path})
-raw_root = os.path.join(os.getcwd(), 'raw')
-nii_root = os.path.join(os.getcwd(), 'nii')
+raw_root = os.path.join(os.getcwd(), 'data', 'raw')
+nii_root = os.path.join(os.getcwd(), 'data', 'nii')
 def dcm2nii(src, dst, filename):
     cmd = 'dcm2niix -z y -f {} -w 0 -o {} {}'.format(filename, dst, src)
     os.system(cmd)

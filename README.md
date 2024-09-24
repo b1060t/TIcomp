@@ -12,3 +12,8 @@
     rs-fMRI
 5. Session 6: Follow-up MRI
     rs-fMRI
+
+## fMRIPrep commands
+```bash
+fmriprep-docker nii fmriprep -i nipreps/fmriprep:latest --fs-license-file ~/freesurfer/license.txt -w ../tmp
+```
