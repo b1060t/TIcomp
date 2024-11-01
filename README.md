@@ -15,5 +15,5 @@
 
 ## fMRIPrep commands
 ```bash
-fmriprep-docker nii fmriprep -i nipreps/fmriprep:latest --fs-license-file ~/freesurfer/license.txt -w ../tmp
+fmriprep-docker nii fmriprep -i nipreps/fmriprep:latest --fs-license-file ~/freesurfer/license.txt -w ../tmp --fs-no-reconall --output-spaces MNI152NLin2009cAsym 
 ```

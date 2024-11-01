@@ -1,6 +1,25 @@
 import os
 import glob
 
+def dcm2nii(src, dst, filename):
+    cmd = 'dcm2niix -z y -f {} -w 0 -o {} {}'.format(filename, dst, src)
+    os.system(cmd)
+def mkdir_if_not_exist(path):
+    if not os.path.exists(path):
+        os.mkdir(path)
+
+pattern = os.path.join('data', 'zip', 'ADUL*')
+subj_list = list(glob.glob(f'{pattern}'))
+subj_list = [os.path.abspath(f) for f in subj_list]
+raw_list = [f.replace('zip', 'raw') for f in subj_list]
+for subj in subj_list:
+    raw_dir = subj.replace('zip', 'raw')
+    mkdir_if_not_exist(raw_dir)
+    zip_files = glob.glob(f'{subj}/*.zip')
+    for zip_file in zip_files:
+        unzip_command = f'unzip -d {raw_dir} {zip_file}'
+        os.system(unzip_command)
+
 # Parse files in the raw directory
 pattern = 'data/raw/*/*'
 dcmlist = list(glob.glob(f'{pattern}'))
@@ -45,12 +64,7 @@ for rec in dcmlist:
         cohort[id]['raw_dir'].update({ses: path})
 raw_root = os.path.join(os.getcwd(), 'data', 'raw')
 nii_root = os.path.join(os.getcwd(), 'data', 'nii')
-def dcm2nii(src, dst, filename):
-    cmd = 'dcm2niix -z y -f {} -w 0 -o {} {}'.format(filename, dst, src)
-    os.system(cmd)
-def mkdir_if_not_exist(path):
-    if not os.path.exists(path):
-        os.mkdir(path)
+
 def extract_path(rec):
     print(rec)
     path_anat = os.listdir(os.path.join(raw_root, rec['raw_dir']['ANAT']))
